@@ -11,3 +11,5 @@ Commands we are using throughout the application
   - [Stack](https://reactnavigation.org/docs/stack-navigator#installation)
     - npm install @react-navigation/stack
     - npx expo install react-native-gesture-handler
+  - [Bottom Tabs](https://reactnavigation.org/docs/bottom-tab-navigator#installation)
+    - npm install @react-navigation/bottom-tabs
