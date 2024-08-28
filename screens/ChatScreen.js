@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native'; 
@@ -9,6 +9,11 @@ import backgroundImage from "../assets/images/whatsapp-img.jpg";
 const ChatScreen = props => {
   const [messageText, setMessageText] = useState("");
 
+  const sendMessage = useCallback(() => {
+    console.log("Sending message: ", messageText);
+    setMessageText("");
+  }, [messageText]);
+
   return (
     <SafeAreaView edges={['right', 'left', 'bottom']} style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -18,14 +23,14 @@ const ChatScreen = props => {
         <TouchableOpacity style={styles.mediaButton} onPress={() => console.log("Select Assets")}>
           <Ionicons name="add-outline" size={24} color={Colors.blue} />
         </TouchableOpacity>
-        <TextInput placeholder='Type a message' style={styles.textBox} value={messageText} onChangeText={(e) => setMessageText(e)} />
+        <TextInput placeholder='Type a message' style={styles.textBox} value={messageText} onChangeText={(e) => setMessageText(e)} onSubmitEditing={(e) => setMessageText(e.nativeEvent.text)} />
         { 
           messageText === "" ?
           <TouchableOpacity style={styles.mediaButton} onPress={() => console.log("Open Camera")}>
             <Ionicons name="camera-outline" size={24} color={Colors.blue} />
           </TouchableOpacity>
           :
-          <TouchableOpacity style={{ ...styles.mediaButton, ...styles.sendButton }} onPress={() => console.log("Open Camera")}>
+          <TouchableOpacity style={{ ...styles.mediaButton, ...styles.sendButton }} onPress={sendMessage}>
             <Ionicons name="send-outline" size={24} color={Colors.blue} />
           </TouchableOpacity>
         }
