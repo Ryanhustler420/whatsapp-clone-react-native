@@ -13,11 +13,11 @@ const ChatScreen = props => {
 
       </ImageBackground>
       <View style={styles.inputContainer}>
-        <TouchableOpacity onPress={() => console.log("Select Assets")}>
+        <TouchableOpacity style={styles.mediaButton} onPress={() => console.log("Select Assets")}>
           <Ionicons name="add-outline" size={24} color={Colors.blue} />
         </TouchableOpacity>
-        <TextInput />
-        <TouchableOpacity onPress={() => console.log("Open Camera")}>
+        <TextInput placeholder='Type a message' style={styles.textBox} />
+        <TouchableOpacity style={styles.mediaButton} onPress={() => console.log("Open Camera")}>
           <Ionicons name="camera-outline" size={24} color={Colors.blue} />
         </TouchableOpacity>
       </View>
@@ -37,6 +37,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 8,
     paddingHorizontal: 10,
+  },
+  textBox: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: Colors.lightGrey,
+    marginHorizontal: 8,
+    padding: 10,
+  },
+  mediaButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   }
 });
 
