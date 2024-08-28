@@ -8,6 +8,8 @@ import { useState, useEffect, useCallback } from 'react';
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 import SettingsScreen from './screens/SettingsScreen';
 import ChatListScreen from './screens/ChatListScreen';
 import ChatSettingsScreen from './screens/ChatSettingsScreen';
@@ -23,8 +25,20 @@ const TabNavigator = () => {
         headerTitle: ""
       }}
     >
-      <Tab.Screen name="ChatList" component={ChatListScreen} options={{ tabBarLabel: "Chats" }} />
-      <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarLabel: 'Settings' }} />
+      <Tab.Screen name="ChatList" 
+        component={ChatListScreen} 
+        options={{ 
+          tabBarLabel: "Chats",
+          tabBarIcon: (props) => <Ionicons name="chatbubble-outline" size={props.size} color={props.color} />,
+        }}
+      />
+      <Tab.Screen name="Settings" 
+        component={SettingsScreen} 
+        options={{ 
+          tabBarLabel: 'Settings',
+          tabBarIcon: (props) => <Ionicons name="settings-outline" size={props.size} color={props.color} />,
+        }} 
+      />
     </Tab.Navigator>
   );
 }

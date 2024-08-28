@@ -13,3 +13,6 @@ Commands we are using throughout the application
     - npx expo install react-native-gesture-handler
   - [Bottom Tabs](https://reactnavigation.org/docs/bottom-tab-navigator#installation)
     - npm install @react-navigation/bottom-tabs
+- [Expo Vector Icon](https://docs.expo.dev/guides/icons/)
+  - expo install @expo/vector-icons
+  - [Icons](https://icons.expo.fyi/Index)
