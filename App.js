@@ -60,7 +60,15 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={ChatListScreen} />
-          <Stack.Screen name="ChatSettings" component={ChatSettingsScreen} />
+          <Stack.Screen name="ChatSettings" 
+            component={ChatSettingsScreen} 
+            options={{
+              // gestureEnabled: false
+              // headerBackTitle: "Go Back"
+              // headerShadowVisible: true,
+              headerTitle: "Chat Settings",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
