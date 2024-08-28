@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, SafeAreaView } from 'react-native'; 
-
-import backgroundImage from "../assets/images/whatsapp-img.jpg";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { TextInput } from 'react-native-gesture-handler';
+import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native'; 
+
+import Colors from "../constants/colors";
+import backgroundImage from "../assets/images/whatsapp-img.jpg";
 
 const ChatScreen = props => {
   return (
@@ -11,9 +13,13 @@ const ChatScreen = props => {
 
       </ImageBackground>
       <View style={styles.inputContainer}>
-        <Button title="Image" />
+        <TouchableOpacity onPress={() => console.log("Select Assets")}>
+          <Ionicons name="add-outline" size={24} color={Colors.blue} />
+        </TouchableOpacity>
         <TextInput />
-        <Button title="Camera" />
+        <TouchableOpacity onPress={() => console.log("Open Camera")}>
+          <Ionicons name="camera-outline" size={24} color={Colors.blue} />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
