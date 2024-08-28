@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'; 
+import { View, Text, StyleSheet, Button } from 'react-native'; 
 
 const ChatListScreen = props => {
   return (
     <View style={styles.container}>
       <Text>Chat List Screen</Text>
+      <Button title="Chat Settings" onPress={() => props.navigation.navigate("ChatSettings")} />
     </View>
   );
 }
@@ -12,7 +13,6 @@ const ChatListScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   }
