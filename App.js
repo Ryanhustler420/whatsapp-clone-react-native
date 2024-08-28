@@ -1,30 +1,32 @@
 import { SafeAreaProvider  } from "react-native-safe-area-context";
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
-  const [count, setCount] = useState(0);
+  const [appIsLoaded, setAppIsLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("Rendering...");
+    // Load fonts
+    setTimeout(() => {
+      setAppIsLoaded(true);
+    }, 1000);
   }, []);
 
-  const add = () => 
-  {
-    setCount(count + 1);
-  }
+  const onLayout = useCallback(async () => {
+    if (appIsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsLoaded]);
 
-  const minus = () =>
-  {
-    setCount(count - 1);
-  }
+  if (!appIsLoaded) return null;
 
   return (
-    <SafeAreaProvider style={styles.container}>
-      <Button title="Add" onPress={add} />
-      <Text>Hello {count}</Text>
-      <Button title="Minus" onPress={minus} />
+    <SafeAreaProvider style={styles.container} onLayout={onLayout}>
+      <Text>Hello, World</Text>
     </SafeAreaProvider>
   );
 }
