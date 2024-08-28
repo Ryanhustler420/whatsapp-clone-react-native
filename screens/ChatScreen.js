@@ -1,15 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground } from 'react-native'; 
+import { View, Text, StyleSheet, Button, ImageBackground, SafeAreaView } from 'react-native'; 
 
 import backgroundImage from "../assets/images/whatsapp-img.jpg";
+import { TextInput } from 'react-native-gesture-handler';
 
 const ChatScreen = props => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['right', 'left', 'bottom']} style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
 
       </ImageBackground>
-    </View>
+      <View style={styles.inputContainer}>
+        <Button title="Image" />
+        <TextInput />
+        <Button title="Camera" />
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -20,6 +26,11 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
   }
 });
 
