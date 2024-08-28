@@ -1,12 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider  } from "react-native-safe-area-context";
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { useState, useEffect } from 'react';
 
 export default function App() {
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Rendering...");
+  }, []);
+
+  const add = () => 
+  {
+    setCount(count + 1);
+  }
+
+  const minus = () =>
+  {
+    setCount(count - 1);
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up Waradda to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider style={styles.container}>
+      <Button title="Add" onPress={add} />
+      <Text>Hello {count}</Text>
+      <Button title="Minus" onPress={minus} />
+    </SafeAreaProvider>
   );
 }
 
