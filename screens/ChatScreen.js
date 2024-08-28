@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native'; 
+import { View, Text, StyleSheet, Button, ImageBackground } from 'react-native'; 
+
+import backgroundImage from "../assets/images/whatsapp-img.jpg";
 
 const ChatScreen = props => {
   return (
     <View style={styles.container}>
-      <Text>Chat Screen</Text>
+      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+
+      </ImageBackground>
     </View>
   );
 }
@@ -12,8 +16,10 @@ const ChatScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  backgroundImage: {
+    flex: 1
   }
 });
 
