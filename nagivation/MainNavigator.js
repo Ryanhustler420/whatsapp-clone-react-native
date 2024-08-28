@@ -7,6 +7,7 @@ import ChatSettingsScreen from '../screens/ChatSettingsScreen';
 
 import SettingsScreen from '../screens/SettingsScreen';
 import ChatListScreen from '../screens/ChatListScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,6 +44,15 @@ const MainNavigator = props => {
         component={TabNavigator} 
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen name="ChatScreen" 
+        component={ChatScreen} 
+        options={{
+          // gestureEnabled: false
+          // headerShadowVisible: true,
+          headerTitle: "",
+          headerBackTitle: "Back",
         }}
       />
       <Stack.Screen name="ChatSettings" 

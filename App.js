@@ -34,7 +34,7 @@ export default function App() {
         console.warn(e);
       } finally {
         // Tell the application to render
-        setAppIsLoaded(true);
+        setTimeout(() => setAppIsLoaded(true), 1000);
       }
     }
 
