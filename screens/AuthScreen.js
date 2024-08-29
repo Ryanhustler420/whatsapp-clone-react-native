@@ -3,6 +3,7 @@ import Input from '../components/Input';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import PageContainer from '../components/PageContainer';
 import { Text, StyleSheet, SafeAreaView } from 'react-native'; 
+import SubmitButton from '../components/SubmitButton';
 
 const AuthScreen = props => {
   return (
@@ -28,6 +29,9 @@ const AuthScreen = props => {
           iconPack={Ionicons}
           icon="key-outline" 
         />
+
+        <SubmitButton />
+
       </PageContainer>
     </SafeAreaView>
   );
