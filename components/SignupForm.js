@@ -6,9 +6,6 @@ import SubmitButton from '../components/SubmitButton';
 import { reducer } from '../utils/reducers/formReducer';
 import { validateInput } from '../utils/actions/formActions';
 import { signUp } from '../utils/actions/authActions';
-import { getFirebaseApp } from '../utils/firebaseHelper';
-
-console.log(getFirebaseApp());
 
 const initialState = {
   inputValues: {
