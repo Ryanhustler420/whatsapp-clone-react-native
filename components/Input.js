@@ -6,7 +6,9 @@ const Input = props => {
     <Text style={styles.label}>{props.label}</Text>
     <View style={styles.inputContainer}>
       {props.icon && <props.iconPack style={styles.icon} name={props.icon} size={props.iconSize || 24} color="black" />}
-      <TextInput />
+      <TextInput 
+        style={styles.input}
+      />
     </View>
   </View>
 }
@@ -33,6 +35,13 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
     color: Colors.grey,
+  },
+  input: {
+    color: Colors.textColor,
+    fontFamily: 'regular',
+    letterSpacing: .3,
+    paddingTop: 0,
+    flex: 1,
   }
 });
 
