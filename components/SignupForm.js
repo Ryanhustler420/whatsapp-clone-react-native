@@ -1,9 +1,9 @@
 import React from 'react';
-import { validate } from 'validate.js';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
+import { validateString } from '../utils/validationConstraints';
 
 const SignupForm = props => {
 
@@ -11,20 +11,7 @@ const SignupForm = props => {
     switch(inputId) {
       case "firstName":
       case "lastName":
-        const constraints = { 
-          presence: { allowEmpty: false },
-        };
-
-        if (inputValue !== "")
-        {
-          constraints.format = {
-            pattern: "[a-z]+",
-            flags: "i",
-            message: "value can only contain letters",
-          }
-        }
-
-        console.log(validate({ [inputId]: inputValue }, { [inputId]: constraints }));
+        console.log(validateString(inputId, inputValue));
         break;
       case "email":
         break;
