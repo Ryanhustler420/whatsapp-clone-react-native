@@ -3,23 +3,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
-import { validateEmail, validatePassword, validateString } from '../utils/validationConstraints';
+import { validateInput } from '../utils/actions/formActions';
 
 const SignupForm = props => {
 
   const inputChangeHandler = (inputId, inputValue) => {
-    switch(inputId) {
-      case "firstName":
-      case "lastName":
-        console.log(validateString(inputId, inputValue));
-        break;
-      case "email":
-        console.log(validateEmail(inputId, inputValue));
-        break;
-      case "password":
-        console.log(validatePassword(inputId, inputValue));
-        break;
-    }
+    console.log(validateInput(inputId, inputValue));
   }
 
   return (
@@ -29,6 +18,7 @@ const SignupForm = props => {
         label="First Name" 
         iconPack={Ionicons}
         icon="person-outline" 
+        autoCapitalize={false}
         onInputChange={inputChangeHandler}
       />
       <Input 
@@ -36,6 +26,7 @@ const SignupForm = props => {
         label="Last Name" 
         iconPack={Ionicons}
         icon="person-outline" 
+        autoCapitalize={false} 
         onInputChange={inputChangeHandler}
       />
       <Input 
@@ -43,12 +34,16 @@ const SignupForm = props => {
         label="Email" 
         iconPack={Ionicons}
         icon="mail-outline" 
+        autoCapitalize={false}
+        keyboardType="email-address" 
         onInputChange={inputChangeHandler}
       />
       <Input 
         id="password"
         label="Password" 
         iconPack={Ionicons}
+        autoCapitalize={false}
+        secureTextEntry={true}
         icon="key-outline" 
         onInputChange={inputChangeHandler}
       />

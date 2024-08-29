@@ -12,6 +12,7 @@ const Input = props => {
     <View style={styles.inputContainer}>
       {props.icon && <props.iconPack style={styles.icon} name={props.icon} size={props.iconSize || 24} color="black" />}
       <TextInput 
+        { ...props }
         style={styles.input}
         onChangeText={onChangeText}
       />
