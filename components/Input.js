@@ -10,6 +10,13 @@ const Input = props => {
         style={styles.input}
       />
     </View>
+    
+    {
+      props.errorText &&
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{props.errorText}</Text>
+      </View>
+    }
   </View>
 }
 
@@ -42,6 +49,15 @@ const styles = StyleSheet.create({
     letterSpacing: .3,
     paddingTop: 0,
     flex: 1,
+  },
+  errorContainer: {
+    marginVertical: 5,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 13,
+    fontFamily: "regular",
+    letterSpacing: .3,
   }
 });
 

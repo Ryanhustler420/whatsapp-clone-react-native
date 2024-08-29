@@ -10,8 +10,23 @@ const AuthScreen = props => {
       <PageContainer>
         <Input 
           label="First Name" 
+          iconPack={Ionicons}
           icon="person-outline" 
-          iconPack={Ionicons} 
+        />
+        <Input 
+          label="Last Name" 
+          iconPack={Ionicons}
+          icon="person-outline" 
+        />
+        <Input 
+          label="Email" 
+          iconPack={Ionicons}
+          icon="mail-outline" 
+        />
+        <Input 
+          label="Password" 
+          iconPack={Ionicons}
+          icon="key-outline" 
         />
       </PageContainer>
     </SafeAreaView>
