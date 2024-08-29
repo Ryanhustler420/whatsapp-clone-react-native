@@ -2,12 +2,18 @@ import { StyleSheet, View, Text, TextInput } from "react-native"
 import Colors from "../constants/colors";
 
 const Input = props => {
+
+  const onChangeText = text => {
+    props.onInputChange(props.id, text);
+  }
+
   return <View style={styles.container}>
     <Text style={styles.label}>{props.label}</Text>
     <View style={styles.inputContainer}>
       {props.icon && <props.iconPack style={styles.icon} name={props.icon} size={props.iconSize || 24} color="black" />}
       <TextInput 
         style={styles.input}
+        onChangeText={onChangeText}
       />
     </View>
     
