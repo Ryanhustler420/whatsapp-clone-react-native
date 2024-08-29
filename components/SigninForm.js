@@ -32,6 +32,7 @@ const SigninForm = props => {
         autoCapitalize={false}
         keyboardType="email-address"  
         onInputChange={inputChangeHandler}
+        errorText={formState.inputValidities["email"]}
       />
       <Input 
         id="password"
@@ -41,6 +42,7 @@ const SigninForm = props => {
         secureTextEntry={true}
         icon="key-outline" 
         onInputChange={inputChangeHandler}
+        errorText={formState.inputValidities["password"]}
       />
       <SubmitButton 
         title="Sign in"

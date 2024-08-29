@@ -33,6 +33,7 @@ const SignupForm = props => {
         icon="person-outline" 
         autoCapitalize={false}
         onInputChange={inputChangeHandler}
+        errorText={formState.inputValidities["firstName"]}
       />
       <Input 
         id="lastName"
@@ -41,6 +42,7 @@ const SignupForm = props => {
         icon="person-outline" 
         autoCapitalize={false} 
         onInputChange={inputChangeHandler}
+        errorText={formState.inputValidities["lastName"]}
       />
       <Input 
         id="email"
@@ -50,6 +52,7 @@ const SignupForm = props => {
         autoCapitalize={false}
         keyboardType="email-address" 
         onInputChange={inputChangeHandler}
+        errorText={formState.inputValidities["email"]}
       />
       <Input 
         id="password"
@@ -59,6 +62,7 @@ const SignupForm = props => {
         secureTextEntry={true}
         icon="key-outline" 
         onInputChange={inputChangeHandler}
+        errorText={formState.inputValidities["password"]}
       />
       <SubmitButton 
         title="Sign up"
