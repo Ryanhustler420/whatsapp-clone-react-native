@@ -1,4 +1,5 @@
 import React from 'react';
+import { validate } from 'validate.js';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '../components/Input';
@@ -7,20 +8,42 @@ import SubmitButton from '../components/SubmitButton';
 const SignupForm = props => {
 
   const inputChangeHandler = (inputId, inputValue) => {
-    console.log(inputId, inputValue);
+    switch(inputId) {
+      case "firstName":
+      case "lastName":
+        const constraints = { 
+          presence: { allowEmpty: false },
+        };
+
+        if (inputValue !== "")
+        {
+          constraints.format = {
+            pattern: "[a-z]+",
+            flags: "i",
+            message: "value can only contain letters",
+          }
+        }
+
+        console.log(validate({ [inputId]: inputValue }, { [inputId]: constraints }));
+        break;
+      case "email":
+        break;
+      case "password":
+        break;
+    }
   }
 
   return (
     <>
       <Input 
-        id="firstname"
+        id="firstName"
         label="First Name" 
         iconPack={Ionicons}
         icon="person-outline" 
         onInputChange={inputChangeHandler}
       />
       <Input 
-        id="lastname"
+        id="lastName"
         label="Last Name" 
         iconPack={Ionicons}
         icon="person-outline" 
