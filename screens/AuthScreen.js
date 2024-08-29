@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'; 
+import { Image, Text, StyleSheet, SafeAreaView, TouchableOpacity, View } from 'react-native'; 
 
 import SignupForm from '../components/SignupForm';
 import PageContainer from '../components/PageContainer';
 import SigninForm from '../components/SigninForm';
 import Colors from '../constants/colors';
+
+import logo from "../assets/images/goonsroom.png";
 
 const AuthScreen = props => {
   const [isSignup, setIsSignup] = useState(false);
@@ -12,6 +14,9 @@ const AuthScreen = props => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <PageContainer>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={logo} />
+        </View>
         {isSignup ? <SignupForm /> : <SigninForm />}
         <TouchableOpacity 
           style={styles.linkContainer} 
@@ -34,6 +39,15 @@ const styles = StyleSheet.create({
     color: Colors.blue,
     fontFamily: 'medium',
     letterSpacing: .3,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  image: {
+    width: '50%',
+    resizeMode: 'contain',
   }
 });
 
