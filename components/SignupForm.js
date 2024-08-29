@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
-import { validateString } from '../utils/validationConstraints';
+import { validateEmail, validatePassword, validateString } from '../utils/validationConstraints';
 
 const SignupForm = props => {
 
@@ -14,8 +14,10 @@ const SignupForm = props => {
         console.log(validateString(inputId, inputValue));
         break;
       case "email":
+        console.log(validateEmail(inputId, inputValue));
         break;
       case "password":
+        console.log(validatePassword(inputId, inputValue));
         break;
     }
   }
