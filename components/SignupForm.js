@@ -16,8 +16,22 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  const { validationResult } = action;
-  return { ...state, formIsValid: validationResult === undefined };
+  const { validationResult, inputId } = action;
+
+  const updatedValidities = {
+    ...state.inputValidities,
+    [inputId]: validationResult,
+  };
+
+  let updatedFormIsValid = true;
+  for (const key in updatedValidities) {
+    if (updatedValidities[key] !== undefined) {
+      updatedFormIsValid = false;
+      break;
+    }
+  }
+
+  return { inputValidities: updatedValidities, formIsValid: updatedFormIsValid };
 }
 
 const SignupForm = props => {
@@ -25,7 +39,7 @@ const SignupForm = props => {
 
   const inputChangeHandler = (inputId, inputValue) => {
     const result = validateInput(inputId, inputValue);
-    dispatchFormState({ validationResult: result });
+    dispatchFormState({ inputId, validationResult: result });
   }
 
   return (
