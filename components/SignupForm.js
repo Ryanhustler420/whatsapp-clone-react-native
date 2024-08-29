@@ -1,8 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
+import { reducer } from '../utils/reducers/formReducer';
 import { validateInput } from '../utils/actions/formActions';
 
 const initialState = {
@@ -15,32 +16,13 @@ const initialState = {
   formIsValid: false,
 };
 
-const reducer = (state, action) => {
-  const { validationResult, inputId } = action;
-
-  const updatedValidities = {
-    ...state.inputValidities,
-    [inputId]: validationResult,
-  };
-
-  let updatedFormIsValid = true;
-  for (const key in updatedValidities) {
-    if (updatedValidities[key] !== undefined) {
-      updatedFormIsValid = false;
-      break;
-    }
-  }
-
-  return { inputValidities: updatedValidities, formIsValid: updatedFormIsValid };
-}
-
 const SignupForm = props => {
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
-  const inputChangeHandler = (inputId, inputValue) => {
+  const inputChangeHandler = useCallback((inputId, inputValue) => {
     const result = validateInput(inputId, inputValue);
     dispatchFormState({ inputId, validationResult: result });
-  }
+  }, [dispatchFormState]);
 
   return (
     <>

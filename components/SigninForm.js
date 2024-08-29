@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useCallback, useReducer } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
+import { reducer } from '../utils/reducers/formReducer';
 import { validateInput } from '../utils/actions/formActions';
 
-const SigninForm = props => {
+const initialState = {
+  inputValidities: {
+    email: false,
+    password: false,
+  },
+  formIsValid: false,
+};
 
-  const inputChangeHandler = (inputId, inputValue) => {
-    console.log(validateInput(inputId, inputValue));
-  }
+const SigninForm = props => {
+  const [formState, dispatchFormState] = useReducer(reducer, initialState);
+
+  const inputChangeHandler = useCallback((inputId, inputValue) => {
+    const result = validateInput(inputId, inputValue);
+    dispatchFormState({ inputId, validationResult: result });
+  }, [dispatchFormState]);
 
   return (
     <>
@@ -35,6 +46,7 @@ const SigninForm = props => {
         title="Sign in"
         onPress={() => console.log("Button Pressed")}
         style={{ marginTop: 20 }}
+        disabled={!formState.formIsValid}
       />
     </>
   )
