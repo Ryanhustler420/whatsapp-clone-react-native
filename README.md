@@ -18,3 +18,6 @@ Commands we are using throughout the application
   - [Icons](https://icons.expo.fyi/Index)
 - [Validation](https://validatejs.org/)
   - npm install --save validate.js
+- [Firebase](console.firebase.com)
+  - npm install firebase
+  - [Expo Metro](https://docs.expo.dev/guides/customizing-metro/)
