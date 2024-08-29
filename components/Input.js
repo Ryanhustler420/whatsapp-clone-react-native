@@ -3,7 +3,7 @@ import Colors from "../constants/colors";
 
 const Input = props => {
   return <View style={styles.container}>
-    <Text>{props.label}</Text>
+    <Text style={styles.label}>{props.label}</Text>
     <View style={styles.inputContainer}>
       {props.icon && <props.iconPack style={styles.icon} name={props.icon} size={props.iconSize || 24} color="black" />}
       <TextInput />
@@ -14,6 +14,12 @@ const Input = props => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+  },
+  label: {
+    fontFamily: 'bold',
+    marginVertical: 8,
+    letterSpacing: .3,
+    color: Colors.textColor,
   },
   inputContainer: {
     width: '100%',
