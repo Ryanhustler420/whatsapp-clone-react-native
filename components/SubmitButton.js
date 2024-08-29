@@ -8,9 +8,15 @@ const SubmitButton = props => {
   const disabledBgColor = Colors.lightGrey;
   const bgColor = props.disabled ? disabledBgColor : enabledBgColor;
 
-  return <TouchableOpacity style={{ ...styles.button, backgroundColor: bgColor }}>
+  return <TouchableOpacity
+    onPress={props.disabled ? () => {} : props.onPress}
+    style={{ 
+      ...styles.button,
+      ...props.style,
+      backgroundColor: bgColor
+    }}>
     <Text style={{ color: props.disabled ? Colors.grey : 'white' }}>
-      Click Me
+      {props.title}
     </Text>
   </TouchableOpacity>
 }
