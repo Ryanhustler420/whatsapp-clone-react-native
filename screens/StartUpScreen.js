@@ -32,7 +32,7 @@ const StartUpScreen = props => {
       dispatch(authenticate({ token, userData }));
     }
     tryLogin();
-  }, []);
+  }, [dispatch]);
 
   return <View style={StyleSheet.center}>
     <ActivityIndicator size="large" color={Colors.primary} />
