@@ -51,8 +51,8 @@ export const signIn = (email, password) => {
     } catch (error) {
       const errorCode = error.code;
       let message = "Something went wrong";
-      if (errorCode === "auth/email-already-in-use") {
-        message = "Email already in use";
+      if (errorCode === "auth/wrong-password" || errorCode === "auth/user-not-found") {
+        message = "The username or password was incorrect";
       }
       console.log(error);
       throw new Error(message);

@@ -45,7 +45,7 @@ const SigninForm = props => {
         formState.inputValues.email,
         formState.inputValues.password,
       );
-      dispatch(action);
+      await dispatch(action);
       setError(null);
     } catch (error) {
       setIsLoading(false);
