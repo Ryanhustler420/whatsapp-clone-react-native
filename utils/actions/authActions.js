@@ -60,6 +60,20 @@ export const signIn = (email, password) => {
   }
 }
 
+export const userLogout = () => {
+  return async dispatch => {
+    const { auth } = getFirebaseApp();
+
+    try {
+      await AsyncStorage.removeItem("userData");
+      await auth.signOut();
+      dispatch(authenticate({ token: null, userData: null }));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 const createUser = async (firstName, lastName, email, userId) => {
   const name = `${firstName} ${lastName}`.toLowerCase();
   const userData = {
