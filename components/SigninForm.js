@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { signIn } from '../utils/actions/authActions';
 import { reducer } from '../utils/reducers/formReducer';
 import { validateInput } from '../utils/actions/formActions';
+import Colors from '../constants/colors';
 
 const initialState = {
   inputValues: {
@@ -75,12 +76,16 @@ const SigninForm = props => {
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["password"]}
       />
-      <SubmitButton 
-        title="Sign in"
-        onPress={authHandler}
-        style={{ marginTop: 20 }}
-        disabled={!formState.formIsValid}
-      />
+      {
+        isLoading ?
+        <ActivityIndicator size="small" style={{ marginTop: 20 }} color={Colors.primary} /> :
+        <SubmitButton 
+          title="Sign in"
+          onPress={authHandler}
+          style={{ marginTop: 20 }}
+          disabled={!formState.formIsValid}
+        />
+      }
     </>
   )
 }
