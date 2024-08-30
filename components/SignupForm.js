@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ActivityIndicator, Alert } from 'react-native';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from '../components/Input';
 import Colors from '../constants/colors';
@@ -28,6 +28,7 @@ const initialState = {
 
 const SignupForm = props => {
   const dispatch = useDispatch();
+  const authData = useSelector((state) => state.auth);
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
