@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ActivityIndicator, Alert } from 'react-native';
+import { useDispatch } from "react-redux";
 
 import Input from '../components/Input';
 import Colors from '../constants/colors';
@@ -26,6 +27,8 @@ const initialState = {
 };
 
 const SignupForm = props => {
+  const dispatch = useDispatch();
+
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -43,12 +46,13 @@ const SignupForm = props => {
     if (isLoading) return;
     try {
       setIsLoading(true);
-      await signUp(
+      const action = signUp(
         formState.inputValues.firstName,
         formState.inputValues.lastName,
         formState.inputValues.email,
         formState.inputValues.password,
       );
+      dispatch(action);
       setError(null);
     } catch (error) {
       setIsLoading(false);
