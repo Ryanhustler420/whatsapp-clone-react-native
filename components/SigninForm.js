@@ -10,16 +10,18 @@ import { reducer } from '../utils/reducers/formReducer';
 import { validateInput } from '../utils/actions/formActions';
 import Colors from '../constants/colors';
 
+const isTestMode = true;
+
 const initialState = {
   inputValues: {
-    email: '',
-    password: '',
+    email: isTestMode ? 'example@test.com' : '',
+    password: isTestMode ? '123456' : '',
   },
   inputValidities: {
-    email: false,
-    password: false,
+    email: isTestMode,
+    password: isTestMode,
   },
-  formIsValid: false,
+  formIsValid: isTestMode,
 };
 
 const SigninForm = props => {
@@ -64,6 +66,7 @@ const SigninForm = props => {
         autoCapitalize={false}
         keyboardType="email-address"  
         onInputChange={inputChangeHandler}
+        value={formState.inputValues.email}
         errorText={formState.inputValidities["email"]}
       />
       <Input 
@@ -74,6 +77,7 @@ const SigninForm = props => {
         secureTextEntry={true}
         icon="key-outline" 
         onInputChange={inputChangeHandler}
+        value={formState.inputValues.password}
         errorText={formState.inputValidities["password"]}
       />
       {
