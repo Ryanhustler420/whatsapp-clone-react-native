@@ -1,5 +1,6 @@
-import React, { useCallback, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Alert } from 'react-native';
 
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
@@ -24,6 +25,7 @@ const initialState = {
 };
 
 const SignupForm = props => {
+  const [error, setError] = useState();
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
   const inputChangeHandler = useCallback((inputId, inputValue) => {
@@ -31,13 +33,22 @@ const SignupForm = props => {
     dispatchFormState({ inputId, inputValue, validationResult: result });
   }, [dispatchFormState]);
 
-  const authHandler = () => {
-    signUp(
-      formState.inputValues.firstName,
-      formState.inputValues.lastName,
-      formState.inputValues.email,
-      formState.inputValues.password,
-    );
+  useEffect(() => {
+    if (error) Alert.alert("An error occurred", error);
+  }, [error]);
+
+  const authHandler = async () => {
+    try {
+      await signUp(
+        formState.inputValues.firstName,
+        formState.inputValues.lastName,
+        formState.inputValues.email,
+        formState.inputValues.password,
+      );
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (

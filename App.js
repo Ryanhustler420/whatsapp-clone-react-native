@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
-import { StyleSheet} from 'react-native';
+import { LogBox, StyleSheet} from 'react-native';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useState, useEffect, useCallback } from 'react';
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import AppNavigator from './nagivation/AppNavigator';
+
+// LogBox.ignoreLogs(['You are initializing Firebase Auth for React Native without providing AsyncStorage']);
 
 SplashScreen.preventAutoHideAsync();
 
