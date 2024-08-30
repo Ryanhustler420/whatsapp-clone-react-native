@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 
 import Input from '../components/Input';
+import Colors from '../constants/colors';
 import SubmitButton from '../components/SubmitButton';
 import { reducer } from '../utils/reducers/formReducer';
 import { validateInput } from '../utils/actions/formActions';
@@ -26,6 +27,7 @@ const initialState = {
 
 const SignupForm = props => {
   const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
   const inputChangeHandler = useCallback((inputId, inputValue) => {
@@ -38,7 +40,9 @@ const SignupForm = props => {
   }, [error]);
 
   const authHandler = async () => {
+    if (isLoading) return;
     try {
+      setIsLoading(true);
       await signUp(
         formState.inputValues.firstName,
         formState.inputValues.lastName,
@@ -47,6 +51,7 @@ const SignupForm = props => {
       );
       setError(null);
     } catch (error) {
+      setIsLoading(false);
       setError(error.message);
     }
   };
@@ -91,12 +96,16 @@ const SignupForm = props => {
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["password"]}
       />
-      <SubmitButton 
-        title="Sign up"
-        onPress={authHandler}
-        style={{ marginTop: 20 }}
-        disabled={!formState.formIsValid}
-      />
+      {
+        isLoading ?
+        <ActivityIndicator size="small" style={{ marginTop: 20 }} color={Colors.primary} /> :
+        <SubmitButton 
+          title="Sign up"
+          onPress={authHandler}
+          style={{ marginTop: 20 }}
+          disabled={!formState.formIsValid}
+        />
+      }
     </>
   )
 }
