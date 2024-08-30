@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { Alert, StyleSheet } from 'react-native'; 
+import { ActivityIndicator, Alert, StyleSheet } from 'react-native'; 
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,26 +8,28 @@ import PageTitle from '../components/PageTitle';
 import { reducer } from '../utils/reducers/formReducer';
 import PageContainer from "../components/PageContainer";
 import { validateInput } from '../utils/actions/formActions';
-
-const initialState = {
-  inputValues: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    about: '',
-  },
-  inputValidities: {
-    firstName: false,
-    lastName: false,
-    email: false,
-    about: false,
-  },
-  formIsValid: false,
-};
+import Colors from '../constants/colors';
+import SubmitButton from '../components/SubmitButton';
 
 const SettingsScreen = props => {
   const dispatch = useDispatch();
   const authData = useSelector((state) => state.auth.userData);
+
+  const initialState = {
+    inputValues: {
+      firstName: authData.firstName || '',
+      lastName: authData.lastName || '',
+      email: authData.email || '',
+      about: authData.about ||'',
+    },
+    inputValidities: {
+      firstName: undefined,
+      lastName: undefined,
+      email: undefined,
+      about: undefined,
+    },
+    formIsValid: false,
+  };
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +43,22 @@ const SettingsScreen = props => {
   useEffect(() => {
     if (error) Alert.alert("An error occurred", error);
   }, [error]);
+
+  const saveHandler = useCallback(async () => {
+    if (isLoading) return;
+    try {
+      // setIsLoading(true);
+      // const action = signIn(
+      //   formState.inputValues.email,
+      //   formState.inputValues.password,
+      // );
+      setError(null);
+      // await dispatch(action);
+    } catch (error) {
+      setIsLoading(false);
+      setError(error.message);
+    }
+  }, [dispatch, formState]);
 
   return (
     <PageContainer style={styles.container}>
@@ -86,6 +104,16 @@ const SettingsScreen = props => {
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["about"]}
       />
+      {
+        isLoading ?
+        <ActivityIndicator size="small" style={{ marginTop: 20 }} color={Colors.primary} /> :
+        <SubmitButton 
+          title="Update"
+          onPress={saveHandler}
+          style={{ marginTop: 20 }}
+          disabled={!formState.formIsValid}
+        />
+      }
     </PageContainer>
   );
 }
