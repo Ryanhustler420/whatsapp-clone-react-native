@@ -27,7 +27,7 @@ const initialState = {
 
 const SettingsScreen = props => {
   const dispatch = useDispatch();
-  const authData = useSelector((state) => state.auth);
+  const authData = useSelector((state) => state.auth.userData);
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +51,7 @@ const SettingsScreen = props => {
         iconPack={Ionicons}
         icon="person-outline" 
         autoCapitalize={false}
+        initialValue={authData.firstName}
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["firstName"]}
       />
@@ -60,6 +61,7 @@ const SettingsScreen = props => {
         iconPack={Ionicons}
         icon="person-outline" 
         autoCapitalize={false} 
+        initialValue={authData.lastName}
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["lastName"]}
       />
@@ -70,6 +72,7 @@ const SettingsScreen = props => {
         icon="mail-outline" 
         autoCapitalize={false}
         keyboardType="email-address" 
+        initialValue={authData.email}
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["email"]}
       />
@@ -79,6 +82,7 @@ const SettingsScreen = props => {
         iconPack={Ionicons}
         icon="person-outline" 
         autoCapitalize={false} 
+        initialValue={authData?.about}
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["about"]}
       />
