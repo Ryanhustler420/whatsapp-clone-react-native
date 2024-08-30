@@ -10,6 +10,7 @@ import PageContainer from "../components/PageContainer";
 import { validateInput } from '../utils/actions/formActions';
 import Colors from '../constants/colors';
 import SubmitButton from '../components/SubmitButton';
+import { updateSignedInUserData } from '../utils/actions/authActions';
 
 const SettingsScreen = props => {
   const dispatch = useDispatch();
@@ -47,16 +48,13 @@ const SettingsScreen = props => {
   const saveHandler = useCallback(async () => {
     if (isLoading) return;
     try {
-      // setIsLoading(true);
-      // const action = signIn(
-      //   formState.inputValues.email,
-      //   formState.inputValues.password,
-      // );
-      setError(null);
-      // await dispatch(action);
+      setIsLoading(true);
+      await updateSignedInUserData(authData.userId, formState.inputValues);
     } catch (error) {
       setIsLoading(false);
       setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   }, [dispatch, formState]);
 
