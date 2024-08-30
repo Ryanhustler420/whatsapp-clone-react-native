@@ -21,3 +21,5 @@ Commands we are using throughout the application
 - [Firebase](console.firebase.com)
   - npm install firebase
   - [Expo Metro](https://docs.expo.dev/guides/customizing-metro/)
+- [Redux Toolkit](https://redux-toolkit.js.org/tutorials/quick-start)
+  - npm install @reduxjs/toolkit react-redux

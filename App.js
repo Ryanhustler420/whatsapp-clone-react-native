@@ -5,6 +5,8 @@ import { useState, useEffect, useCallback } from 'react';
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import AppNavigator from './nagivation/AppNavigator';
+import { Provider } from "react-redux";
+import { store } from './store/store';
 
 // LogBox.ignoreLogs(['You are initializing Firebase Auth for React Native without providing AsyncStorage']);
 
@@ -53,9 +55,11 @@ export default function App() {
   if (!appIsLoaded) return null;
 
   return (
-    <SafeAreaProvider style={styles.container} onLayout={onLayout}>
-      <AppNavigator />
-    </SafeAreaProvider>
+    <Provider store={store} >
+      <SafeAreaProvider style={styles.container} onLayout={onLayout}>
+        <AppNavigator />
+      </SafeAreaProvider>
+    </Provider>
   );
 }
 
