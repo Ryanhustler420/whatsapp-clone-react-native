@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'; 
+import { StyleSheet } from 'react-native'; 
 import PageTitle from '../components/PageTitle';
+import PageContainer from "../components/PageContainer";
 
 const SettingsScreen = props => {
   return (
-    <View style={styles.container}>
+    <PageContainer style={styles.container}>
       <PageTitle text="Settings" />
-    </View>
+    </PageContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   }
 });
 
