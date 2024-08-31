@@ -10,7 +10,7 @@ import PageContainer from "../components/PageContainer";
 import { validateInput } from '../utils/actions/formActions';
 import Colors from '../constants/colors';
 import SubmitButton from '../components/SubmitButton';
-import { updateSignedInUserData } from '../utils/actions/authActions';
+import { updateSignedInUserData, userLogout } from '../utils/actions/authActions';
 
 const SettingsScreen = props => {
   const dispatch = useDispatch();
@@ -112,6 +112,12 @@ const SettingsScreen = props => {
           disabled={!formState.formIsValid}
         />
       }
+      <SubmitButton 
+        title="Logout"
+        color={Colors.red}
+        style={{ marginTop: 20 }}
+        onPress={() => dispatch(userLogout())}
+      />
     </PageContainer>
   );
 }
