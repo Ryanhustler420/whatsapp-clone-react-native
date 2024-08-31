@@ -4,7 +4,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Colors from '../constants/colors';
 import placeholder from "../assets/images/goonsroom.png";
-import { launchImagePicker } from '../utils/imagePickerHelper';
+import { launchImagePicker, uploadImageAsync } from '../utils/imagePickerHelper';
 
 const ProfileImage = props => {
   const source = props.uri ? { uri: props.uri } : placeholder;
@@ -17,8 +17,13 @@ const ProfileImage = props => {
       if (!images.length) return;
 
       // Upload the image
+      const uploadUrl = await uploadImageAsync(images[0].uri);
+      if (!uploadUrl)
+      {
+        throw new Error(`Could not upload`);
+      }
 
-      setImage({ uri: images[0].uri });
+      setImage({ uri: uploadUrl });
     } catch (error) {
       console.error(error);
     }

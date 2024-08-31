@@ -25,3 +25,5 @@ Commands we are using throughout the application
   - npm install @reduxjs/toolkit react-redux
 - [Image Picker](https://docs.expo.dev/versions/latest/sdk/imagepicker/#installation)
   - npx expo install expo-image-picker
+- [React-Native-UUID](https://www.npmjs.com/package/react-native-uuid)
+  - npm i react-native-uuid
