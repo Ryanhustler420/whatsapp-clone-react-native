@@ -75,7 +75,9 @@ export const userLogout = () => {
 }
 
 export const updateSignedInUserData = async (userId, newData) => {
-  newData.name = `${newData.firstName} ${newData.lastName}`.toLowerCase();
+  if (newData.firstName && newData.lastName) {
+    newData.name = `${newData.firstName} ${newData.lastName}`.toLowerCase();
+  }
 
   const dbRef = ref(getDatabase());
   const childRef = child(dbRef, `users/${userId}`);
