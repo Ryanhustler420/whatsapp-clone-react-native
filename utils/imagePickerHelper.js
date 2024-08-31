@@ -13,7 +13,7 @@ export const launchImagePicker = async () => {
 
     if (!result.canceled)
     {
-        console.log(result.assets);
+        return result.assets;
     }
 };
 
