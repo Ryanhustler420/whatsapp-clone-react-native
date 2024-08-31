@@ -82,7 +82,7 @@ const SettingsScreen = props => {
   return (
     <PageContainer style={styles.container}>
       <PageTitle text="Settings" />
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.formContianer}>
 
         <ProfileImage size={80} />
 
@@ -155,6 +155,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  formContianer: {
+    alignItems: 'center',
   }
 });
 
