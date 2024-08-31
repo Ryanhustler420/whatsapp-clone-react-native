@@ -23,3 +23,5 @@ Commands we are using throughout the application
   - [Expo Metro](https://docs.expo.dev/guides/customizing-metro/)
 - [Redux Toolkit](https://redux-toolkit.js.org/tutorials/quick-start)
   - npm install @reduxjs/toolkit react-redux
+- [Image Picker](https://docs.expo.dev/versions/latest/sdk/imagepicker/#installation)
+  - npx expo install expo-image-picker

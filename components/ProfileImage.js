@@ -1,20 +1,26 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Colors from '../constants/colors';
 import placeholder from "../assets/images/goonsroom.png";
+import { launchImagePicker } from '../utils/imagePickerHelper';
 
 const ProfileImage = props => {
+
+  const pickImage = () => {
+    launchImagePicker();
+  }
+
   return (
-    <View>
+    <TouchableOpacity onPress={pickImage}>
       <Image 
         style={{ ...styles.image, ...{ width: props.size, height: props.size } }}
         source={placeholder} />
       <View style={styles.editIconContainer}>
         <Ionicons name="pencil-outline" size={15} color="black" />
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
