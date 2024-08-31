@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native'; 
+import { View, Text, StyleSheet, Button, TextInput, ActivityIndicator, FlatList } from 'react-native'; 
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import PageContainer from "../components/PageContainer";
@@ -39,7 +39,16 @@ const NewChatScreen = props => {
       setIsLoading(true);
 
       const userResult = await searchUsers(searchTerm);
-      console.log(userResult);
+      setUsers(userResult);
+
+      if (Object.keys(userResult).length === 0)
+      {
+        setNoResultFound(true);
+      }
+      else
+      {
+        setNoResultFound(false);
+      }
 
       setIsLoading(false);
     }, 500);
@@ -59,6 +68,25 @@ const NewChatScreen = props => {
           onChangeText={(text) => setSearchTerm(text)}
         />
       </View>
+
+      {
+        isLoading && 
+        <View style={CommonStyles.center}>
+          <ActivityIndicator size={"large"} color={Colors.primary}  />
+        </View>
+      }
+
+      {
+        !isLoading && !noResultFound && users &&
+        <FlatList
+          data={Object.keys(users)}
+          renderItem={(itemData) => {
+            const userId = itemData.item;
+            return <Text>{userId}</Text>
+          }}
+        />
+      }
+
       {
         !isLoading && noResultFound && (
           <View style={CommonStyles.center}>
