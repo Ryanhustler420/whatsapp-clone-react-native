@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -6,8 +7,10 @@ import Colors from '../constants/colors';
 import placeholder from "../assets/images/goonsroom.png";
 import { updateSignedInUserData } from "../utils/actions/authActions";
 import { launchImagePicker, uploadImageAsync } from '../utils/imagePickerHelper';
+import { updateLoggedInUserData } from '../store/authSlice';
 
 const ProfileImage = props => {
+  const dispatch = useDispatch();
   const source = props.uri ? { uri: props.uri } : placeholder;
 
   const [image, setImage] = useState(source);
@@ -26,7 +29,9 @@ const ProfileImage = props => {
         throw new Error(`Could not upload`);
       }
 
-      await updateSignedInUserData(userId, { profilePicture: uploadUrl });
+      const newData = { profilePicture: uploadUrl };
+      await updateSignedInUserData(userId, newData);
+      dispatch(updateLoggedInUserData({ newData }));
 
       setImage({ uri: uploadUrl });
     } catch (error) {
