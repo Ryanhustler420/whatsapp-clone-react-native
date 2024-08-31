@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { Platform } from "react-native";
+import { getFirebaseApp } from "./firebaseHelper";
 
 export const launchImagePicker = async () => {
     await checkMediaPermission();
@@ -16,6 +17,23 @@ export const launchImagePicker = async () => {
         return result.assets;
     }
 };
+
+export const uploadImageAsync = async (uri) => {
+    const { auth } = getFirebaseApp();
+
+    const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+            reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+    });
+}
 
 const checkMediaPermission = async () => {
     if (Platform.OS !== "web")
