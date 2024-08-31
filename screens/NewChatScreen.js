@@ -11,6 +11,7 @@ const NewChatScreen = props => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [noResultFound, setNoResultFound] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState();
 
   useEffect(() => {
@@ -27,6 +28,24 @@ const NewChatScreen = props => {
     })
   }, []);
 
+  useEffect(() => {
+    const delaySearch = setTimeout(() => {
+      if (!searchTerm || searchTerm === ""){
+        setUsers();
+        setNoResultFound(false);
+        return;
+      }
+      setIsLoading(true);
+      setUsers({});
+      setNoResultFound(true);
+      setIsLoading(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(delaySearch);
+    }
+  }, [searchTerm]);
+
   return (
     <PageContainer>
       <View style={styles.searchContainer}>
@@ -34,7 +53,7 @@ const NewChatScreen = props => {
         <TextInput 
           placeholder="Search"
           style={styles.searchBox}
-          onChangeText={() => {}}
+          onChangeText={(text) => setSearchTerm(text)}
         />
       </View>
       {
