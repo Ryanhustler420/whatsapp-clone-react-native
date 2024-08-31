@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Colors from '../constants/colors';
 import placeholder from "../assets/images/goonsroom.png";
@@ -14,6 +14,7 @@ const ProfileImage = props => {
   const source = props.uri ? { uri: props.uri } : placeholder;
 
   const [image, setImage] = useState(source);
+  const [isLoading, setIsLoading] = useState(false);
 
   const userId = props.userId;
 
@@ -23,7 +24,9 @@ const ProfileImage = props => {
       if (!images.length) return;
 
       // Upload the image
+      setIsLoading(true);
       const uploadUrl = await uploadImageAsync(images[0].uri);
+      setIsLoading(false);
       if (!uploadUrl)
       {
         throw new Error(`Could not upload`);
@@ -36,14 +39,19 @@ const ProfileImage = props => {
       setImage({ uri: uploadUrl });
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   }
 
   return (
     <TouchableOpacity onPress={pickImage}>
-      <Image 
-        style={{ ...styles.image, ...{ width: props.size, height: props.size } }}
-        source={image} />
+      {
+        isLoading ?
+        <View height={props.size} width={props.size} style={styles.loadingContainer}><ActivityIndicator size={"small"} color={Colors.primary} /></View> :
+        <Image 
+          style={{ ...styles.image, ...{ width: props.size, height: props.size } }}
+          source={image} />
+      }
       <View style={styles.editIconContainer}>
         <Ionicons name="pencil-outline" size={15} color="black" />
       </View>
@@ -64,6 +72,10 @@ const styles = StyleSheet.create({
     padding: 8,
     bottom: -8,
     right: -8,
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
