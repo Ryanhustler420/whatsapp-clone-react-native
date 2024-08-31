@@ -87,6 +87,7 @@ const SettingsScreen = props => {
         <ProfileImage 
           size={80} 
           userId={authData.userId} 
+          showEditButton
           // uri={authData.profilePicture}
         />
 
