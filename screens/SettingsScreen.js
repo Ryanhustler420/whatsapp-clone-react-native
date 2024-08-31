@@ -17,12 +17,17 @@ const SettingsScreen = props => {
   const dispatch = useDispatch();
   const authData = useSelector((state) => state.auth.userData);
 
+  const firstName = authData.firstName;
+  const lastName = authData.lastName;
+  const email = authData.email;
+  const about = authData.about;
+
   const initialState = {
     inputValues: {
-      firstName: authData.firstName || '',
-      lastName: authData.lastName || '',
-      email: authData.email || '',
-      about: authData.about ||'',
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      about: about,
     },
     inputValidities: {
       firstName: undefined,
@@ -62,6 +67,16 @@ const SettingsScreen = props => {
       setIsLoading(false);
     }
   }, [dispatch, formState]);
+
+  const hasChanges = () => {
+    const currentValues = formState.inputValues;
+    return (
+      currentValues.firstName !== firstName ||
+      currentValues.lastName !== lastName ||
+      currentValues.email !== email ||
+      currentValues.about !== about
+    );
+  }
 
   return (
     <PageContainer style={styles.container}>
@@ -112,7 +127,7 @@ const SettingsScreen = props => {
         {
           isLoading ?
           <ActivityIndicator size="small" style={{ marginTop: 20 }} color={Colors.primary} /> :
-          <SubmitButton 
+          hasChanges() && <SubmitButton 
             title="Update"
             onPress={saveHandler}
             style={{ marginTop: 20 }}
