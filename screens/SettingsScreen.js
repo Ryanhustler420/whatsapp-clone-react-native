@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet } from 'react-native'; 
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native'; 
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,6 +7,7 @@ import Input from '../components/Input';
 import PageTitle from '../components/PageTitle';
 import { reducer } from '../utils/reducers/formReducer';
 import PageContainer from "../components/PageContainer";
+import { updateLoggedInUserData } from '../store/authSlice';
 import { validateInput } from '../utils/actions/formActions';
 import Colors from '../constants/colors';
 import SubmitButton from '../components/SubmitButton';
@@ -34,6 +35,7 @@ const SettingsScreen = props => {
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
   const inputChangeHandler = useCallback((inputId, inputValue) => {
@@ -50,6 +52,9 @@ const SettingsScreen = props => {
     try {
       setIsLoading(true);
       await updateSignedInUserData(authData.userId, formState.inputValues);
+      dispatch(updateLoggedInUserData({ newData: formState.inputValues }));
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
     } catch (error) {
       setIsLoading(false);
       setError(error.message);
@@ -102,16 +107,19 @@ const SettingsScreen = props => {
         onInputChange={inputChangeHandler}
         errorText={formState.inputValidities["about"]}
       />
-      {
-        isLoading ?
-        <ActivityIndicator size="small" style={{ marginTop: 20 }} color={Colors.primary} /> :
-        <SubmitButton 
-          title="Update"
-          onPress={saveHandler}
-          style={{ marginTop: 20 }}
-          disabled={!formState.formIsValid}
-        />
-      }
+      <View style={{ marginTop: 20 }}>
+        { showSuccessMessage && <Text>Saved!</Text> }
+        {
+          isLoading ?
+          <ActivityIndicator size="small" style={{ marginTop: 20 }} color={Colors.primary} /> :
+          <SubmitButton 
+            title="Update"
+            onPress={saveHandler}
+            style={{ marginTop: 20 }}
+            disabled={!formState.formIsValid}
+          />
+        }
+      </View>
       <SubmitButton 
         title="Logout"
         color={Colors.red}
