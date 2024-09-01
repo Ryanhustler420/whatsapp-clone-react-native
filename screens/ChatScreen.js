@@ -8,7 +8,7 @@ import Colors from "../constants/colors";
 import backgroundImage from "../assets/images/whatsapp-img.jpg";
 import { useSelector } from 'react-redux';
 import Bubble from '../components/Bubble';
-import { createChat } from '../utils/actions/chatActions';
+import { createChat, sendTextMessage } from '../utils/actions/chatActions';
 
 const ChatScreen = props => {
   const storedUsers = useSelector(state => state.users.storedUsers);
@@ -44,6 +44,7 @@ const ChatScreen = props => {
         id = await createChat(authData.userId, props.route?.params?.newChatData);
         setChatId(id);
       }
+      await sendTextMessage(id, authData.userId, messageText);
     } catch (error) {
       console.log(error);
     }
