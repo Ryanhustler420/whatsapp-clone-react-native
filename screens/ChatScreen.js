@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { TextInput } from 'react-native-gesture-handler';
-import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'; 
+import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Platform, Text } from 'react-native'; 
 
 import PageContainer from "../components/PageContainer";
 import Colors from "../constants/colors";
@@ -80,6 +80,21 @@ const ChatScreen = props => {
             }
             {
               errorBannerText !== "" && <Bubble text={errorBannerText} type="error" />
+            }
+            {
+              chatId && 
+              <FlatList
+                data={chatMessages}
+                renderItem={(itemData) => {
+                  const message = itemData.item;
+                  const isOwnMessage = message.sendBy === authData.userId;
+                  const messageType = isOwnMessage ? "myMessage" : "theirMessage";
+                  return <Bubble
+                    type={messageType}
+                    text={message.text}
+                  />
+                }}
+              />
             }
           </PageContainer>
         </ImageBackground>

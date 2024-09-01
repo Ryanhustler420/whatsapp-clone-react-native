@@ -5,6 +5,7 @@ import Colors from '../constants/colors';
 const Bubble = props => {
   const { text, type } = props;
 
+  const wrapperStyle = { ...styles.wrapperStyle };
   const bubbleStyle = { ...styles.textContainer };
   const textStyle = { ...styles.text };
 
@@ -22,12 +23,17 @@ const Bubble = props => {
       bubbleStyle.alignItem = 'center';
       bubbleStyle.marginTop = 10;
       break;
+    case "myMessage":
+      wrapperStyle.justifyContent = "flex-end";
+      bubbleStyle.backgroundColor = '#e7fed6';
+      bubbleStyle.maxWidth = '90%';
+      break;
     default:
       break;
   }
 
   return (
-    <View style={styles.wrapperStyle}>
+    <View style={wrapperStyle}>
       <View style={bubbleStyle}>
         <Text style={textStyle}>{text}</Text>
       </View>
