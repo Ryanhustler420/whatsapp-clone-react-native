@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'; 
@@ -8,13 +8,28 @@ import backgroundImage from "../assets/images/whatsapp-img.jpg";
 import { useSelector } from 'react-redux';
 
 const ChatScreen = props => {
+  const storedUsers = useSelector(state => state.users.storedUsers);
+  const authData = useSelector(state => state.auth.userData);
+
+  const [chatUsers, setChatUsers] = useState([]);
   const [messageText, setMessageText] = useState("");
 
-  const storedUsers = useSelector(state => state.users.storedUsers);
-  console.log(storedUsers);
-
   const chatData = props.route?.params?.newChatData;
-  console.log(chatData);
+
+  const getChatTitleFromName = () => {
+    const otherUserId = chatUsers.find(uid => uid !== authData.userId);
+    const otherUserData = storedUsers[otherUserId];
+
+    return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
+  }
+
+  useEffect(() => {
+    props?.navigation?.setOptions({
+      headerTitle: getChatTitleFromName(),
+    })
+
+    setChatUsers(chatData.users);
+  }, [chatUsers]);
 
   const sendMessage = useCallback(() => {
     console.log("Sending message: ", messageText);
