@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFirebaseApp } from '../utils/firebaseHelper';
 import { child, getDatabase, off, onValue, ref } from 'firebase/database';
 import { setChatsData } from "../store/chatSlice";
+import { ActivityIndicator, View } from 'react-native';
+import Colors from '../constants/colors';
+import CommonStyles from '../constants/commonStyles';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,12 +87,11 @@ const StackNavigator = () => {
 const MainNavigator = props => {
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(true);
   const authData = useSelector(state => state.auth.userData);
   const storedUsers = useSelector(state => state.users.storedUsers);
 
   useEffect(() => {
-    console.log("Subscribing to firebase listeners");
-
     const app = getFirebaseApp();
     const dbRef = ref(getDatabase());
     const userChatRef = child(dbRef, `userChats/${authData.userId}`);
@@ -120,9 +122,15 @@ const MainNavigator = props => {
           if (chatFoundCount >= chatIds.length)
           {
             dispatch(setChatsData({ chatsData }));
+            setIsLoading(false);
           }
 
         });
+
+        if (chatFoundCount == 0)
+        {
+          setIsLoading(false);
+        }
       }
     });
 
@@ -132,6 +140,15 @@ const MainNavigator = props => {
       refs.forEach(e => off(e));
     }
   }, []);
+
+  if (isLoading)
+  {
+    return (
+      <View style={CommonStyles.center}>
+        <ActivityIndicator size={"large"} color={Colors.primary} />
+      </View>
+    )
+  }
 
   return (
       <StackNavigator />
