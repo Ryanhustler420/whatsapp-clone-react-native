@@ -11,7 +11,7 @@ import NewChatScreen from '../screens/NewChatScreen';
 import ChatScreen from '../screens/ChatScreen';
 import { useSelector } from 'react-redux';
 import { getFirebaseApp } from '../utils/firebaseHelper';
-import { child, getDatabase, onValue, ref } from 'firebase/database';
+import { child, getDatabase, off, onValue, ref } from 'firebase/database';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -90,12 +90,19 @@ const MainNavigator = props => {
     const app = getFirebaseApp();
     const dbRef = ref(getDatabase());
     const userChatRef = child(dbRef, `userChats/${authData.userId}`);
+    const refs = [];
 
     onValue(userChatRef, (querySnapshot) => {
       const chatIdsData = querySnapshot.val() || {};
       const chatIds = Object.values(chatIdsData);
       console.log(chatIds);
     });
+
+    refs.push(userChatRef);
+
+    return () => {
+      refs.forEach(e => off(e));
+    }
   }, []);
 
   return (
