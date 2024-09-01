@@ -3,9 +3,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'; 
 
+import PageContainer from "../components/PageContainer";
 import Colors from "../constants/colors";
 import backgroundImage from "../assets/images/whatsapp-img.jpg";
 import { useSelector } from 'react-redux';
+import Bubble from '../components/Bubble';
 
 const ChatScreen = props => {
   const storedUsers = useSelector(state => state.users.storedUsers);
@@ -13,6 +15,7 @@ const ChatScreen = props => {
 
   const [chatUsers, setChatUsers] = useState([]);
   const [messageText, setMessageText] = useState("");
+  const [chatId, setChatId] = useState(props.route?.params?.chatId);
 
   const chatData = props.route?.params?.newChatData;
 
@@ -44,7 +47,11 @@ const ChatScreen = props => {
         behavior={Platform.OS == "ios" ? 'padding' : undefined} 
       >
         <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-
+          <PageContainer>
+            {
+              !chatId && <Bubble text="Hello" />
+            }
+          </PageContainer>
         </ImageBackground>
         <View style={styles.inputContainer}>
           <TouchableOpacity style={styles.mediaButton} onPress={() => console.log("Select Assets")}>
