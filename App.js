@@ -7,6 +7,7 @@ import * as Font from "expo-font";
 import AppNavigator from './nagivation/AppNavigator';
 import { Provider } from "react-redux";
 import { store } from './store/store';
+import { MenuProvider } from "react-native-popup-menu";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // LogBox.ignoreLogs(['You are initializing Firebase Auth for React Native without providing AsyncStorage']);
@@ -59,7 +60,9 @@ export default function App() {
   return (
     <Provider store={store} >
       <SafeAreaProvider style={styles.container} onLayout={onLayout}>
-        <AppNavigator />
+        <MenuProvider>
+          <AppNavigator />
+        </MenuProvider>
       </SafeAreaProvider>
     </Provider>
   );

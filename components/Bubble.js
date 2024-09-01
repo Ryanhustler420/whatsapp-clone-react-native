@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Colors from '../constants/colors';
 
 const Bubble = props => {
@@ -8,6 +8,8 @@ const Bubble = props => {
   const wrapperStyle = { ...styles.wrapperStyle };
   const bubbleStyle = { ...styles.textContainer };
   const textStyle = { ...styles.text };
+
+  let Container = View;
 
   switch (type)
   {
@@ -24,11 +26,13 @@ const Bubble = props => {
       bubbleStyle.marginTop = 10;
       break;
     case "myMessage":
+      Container = TouchableWithoutFeedback;
       wrapperStyle.justifyContent = "flex-end";
       bubbleStyle.backgroundColor = '#e7fed6';
       bubbleStyle.maxWidth = '90%';
       break;
     case "theirMessage":
+      Container = TouchableWithoutFeedback;
       wrapperStyle.justifyContent = "flex-start";
       bubbleStyle.maxWidth = '90%';
       break;
@@ -38,9 +42,11 @@ const Bubble = props => {
 
   return (
     <View style={wrapperStyle}>
-      <View style={bubbleStyle}>
-        <Text style={textStyle}>{text}</Text>
-      </View>
+      <Container onLongPress={() => console.log("Long Pressed")} style={{ width: '100%' }}>
+        <View style={bubbleStyle}>
+          <Text style={textStyle}>{text}</Text>
+        </View>
+      </Container>
     </View>
   )
 }

@@ -29,3 +29,5 @@ Commands we are using throughout the application
   - npm i react-native-uuid
 - [React Navigation Header Buttons](https://github.com/vonovak/react-navigation-header-buttons)
   - npm i react-navigation-header-buttons
+- [React Native Popup Menu](https://www.npmjs.com/package/react-native-popup-menu)
+  - npm i react-native-popup-menu
