@@ -5,9 +5,16 @@ import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Keyb
 
 import Colors from "../constants/colors";
 import backgroundImage from "../assets/images/whatsapp-img.jpg";
+import { useSelector } from 'react-redux';
 
 const ChatScreen = props => {
   const [messageText, setMessageText] = useState("");
+
+  const storedUsers = useSelector(state => state.users.storedUsers);
+  console.log(storedUsers);
+
+  const chatData = props.route?.params?.newChatData;
+  console.log(chatData);
 
   const sendMessage = useCallback(() => {
     console.log("Sending message: ", messageText);
