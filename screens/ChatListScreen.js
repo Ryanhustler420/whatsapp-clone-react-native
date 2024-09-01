@@ -7,11 +7,14 @@ import { useSelector } from 'react-redux';
 const ChatListScreen = props => {
 
   const selectedUserId = props.route?.params?.selectedUserId;
+  const storedUsers = useSelector(state => state.users.storedUsers);
   const authData = useSelector((state) => state.auth.userData);
   const userChats = useSelector((state) => {
     const chatsData = state.chats.chatsData;
     return Object.values(chatsData);
   });
+
+  console.log(storedUsers);
 
   console.log(userChats);
 
