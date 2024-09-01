@@ -8,6 +8,9 @@ const ChatListScreen = props => {
 
   const selectedUserId = props.route?.params?.selectedUserId;
   const authData = useSelector((state) => state.auth.userData);
+  const userChats = useSelector((state) => state.chats.chatsData);
+
+  console.log(userChats);
 
   useEffect(() => {
     props?.navigation?.setOptions({
