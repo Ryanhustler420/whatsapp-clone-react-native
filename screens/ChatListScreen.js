@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native'; 
+import { Text, StyleSheet, FlatList } from 'react-native'; 
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector } from 'react-redux';
@@ -8,7 +8,10 @@ const ChatListScreen = props => {
 
   const selectedUserId = props.route?.params?.selectedUserId;
   const authData = useSelector((state) => state.auth.userData);
-  const userChats = useSelector((state) => state.chats.chatsData);
+  const userChats = useSelector((state) => {
+    const chatsData = state.chats.chatsData;
+    return Object.values(chatsData);
+  });
 
   console.log(userChats);
 
@@ -42,12 +45,14 @@ const ChatListScreen = props => {
 
   }, [props.route?.params]);
 
-  return (
-    <View style={styles.container}>
-      <Text>Chat List Screen</Text>
-      <Button title="Single Chat" onPress={() => props.navigation.navigate("ChatScreen")} />
-    </View>
-  );
+  return <FlatList
+    data={userChats}
+    renderItem={(itemData) => {
+      const chatData = itemData.item;
+      const otherUserId = chatData.users.find(uid => uid != authData.userId);
+      return <Text>{otherUserId}</Text>
+    }}
+  />;
 }
 
 const styles = StyleSheet.create({
