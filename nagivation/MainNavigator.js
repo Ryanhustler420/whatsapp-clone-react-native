@@ -95,7 +95,20 @@ const MainNavigator = props => {
     onValue(userChatRef, (querySnapshot) => {
       const chatIdsData = querySnapshot.val() || {};
       const chatIds = Object.values(chatIdsData);
-      console.log(chatIds);
+
+      const chatsData = {};
+      let chatFoundCount = 0;
+
+      for (let i = 0; i < chatIds.length; i++) {
+        const chatId = chatIds[i];
+        const chatRef = child(dbRef, `chats/${chatId}`);
+        refs.push(chatRef);
+
+        onValue(chatRef, (chatSnapshot) => {
+          chatFoundCount++;
+          console.log(chatSnapshot.val());
+        });
+      }
     });
 
     refs.push(userChatRef);
