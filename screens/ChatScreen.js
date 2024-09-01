@@ -18,6 +18,7 @@ const ChatScreen = props => {
 
   const [chatUsers, setChatUsers] = useState([]);
   const [messageText, setMessageText] = useState("");
+  const [errorBannerText, setErrorBannerText] = useState("");
   const [chatId, setChatId] = useState(props.route?.params?.chatId);
 
   const chatData = (chatId && storedChats[chatId]) || props.route?.params?.newChatData;
@@ -46,10 +47,12 @@ const ChatScreen = props => {
         setChatId(id);
       }
       await sendTextMessage(id, authData.userId, messageText);
+      setMessageText("");
     } catch (error) {
       console.log(error);
+      setErrorBannerText("Message failed to send");
+      setTimeout(() => setErrorBannerText(""), 5000);
     }
-    setMessageText("");
   }, [messageText, chatId]);
 
   return (
@@ -63,6 +66,9 @@ const ChatScreen = props => {
           <PageContainer>
             {
               !chatId && <Bubble text="This is new chat, Say hi!" type="system" />
+            }
+            {
+              errorBannerText !== "" && <Bubble text={errorBannerText} type="error" />
             }
           </PageContainer>
         </ImageBackground>

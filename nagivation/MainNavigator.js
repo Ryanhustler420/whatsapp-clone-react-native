@@ -52,10 +52,14 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen name="Home" 
+        <Stack.Screen name="Chats" 
           component={TabNavigator} 
           options={{
-            headerShown: false,
+            headerShown: false, // make this true to see bg color
+            headerStyle: {
+              backgroundColor: '#fff', // Home screen header color
+            },
+            headerTintColor: '#000',
           }}
         />
         <Stack.Screen name="ChatScreen" 
