@@ -32,7 +32,7 @@ const ChatListScreen = props => {
     const chatUsers = [selectedUserId, authData.userId];
     props.navigation.navigate("ChatScreen", { users: chatUsers });
 
-  }, [selectedUserId]);
+  }, [props.route?.params]);
 
   return (
     <View style={styles.container}>
