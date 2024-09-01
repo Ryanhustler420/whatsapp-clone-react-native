@@ -14,6 +14,7 @@ const ChatScreen = props => {
   const storedUsers = useSelector(state => state.users.storedUsers);
   const authData = useSelector(state => state.auth.userData);
   const storedChats = useSelector((state) => state.chats.chatsData);
+  const chatMessages = useSelector((state) => state.messages.messagesData);
 
   const [chatUsers, setChatUsers] = useState([]);
   const [messageText, setMessageText] = useState("");
