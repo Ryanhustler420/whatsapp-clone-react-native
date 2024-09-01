@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,6 +9,9 @@ import SettingsScreen from '../screens/SettingsScreen';
 import ChatListScreen from '../screens/ChatListScreen';
 import NewChatScreen from '../screens/NewChatScreen';
 import ChatScreen from '../screens/ChatScreen';
+import { useSelector } from 'react-redux';
+import { getFirebaseApp } from '../utils/firebaseHelper';
+import { child, getDatabase, onValue, ref } from 'firebase/database';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,7 +42,7 @@ const TabNavigator = () => {
   );
 }
 
-const MainNavigator = props => {
+const StackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
@@ -73,7 +76,30 @@ const MainNavigator = props => {
           component={NewChatScreen} 
         />
       </Stack.Group>
-    </Stack.Navigator>   
+    </Stack.Navigator> 
+  )
+}
+
+const MainNavigator = props => {
+  const authData = useSelector(state => state.auth.userData);
+  const storedUsers = useSelector(state => state.users.storedUsers);
+
+  useEffect(() => {
+    console.log("Subscribing to firebase listeners");
+
+    const app = getFirebaseApp();
+    const dbRef = ref(getDatabase());
+    const userChatRef = child(dbRef, `userChats/${authData.userId}`);
+
+    onValue(userChatRef, (querySnapshot) => {
+      const chatIdsData = querySnapshot.val() || {};
+      const chatIds = Object.values(chatIdsData);
+      console.log(chatIds);
+    });
+  }, []);
+
+  return (
+      <StackNavigator />
   )
 }
 
