@@ -49,7 +49,7 @@ const ChatScreen = props => {
         <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
           <PageContainer>
             {
-              !chatId && <Bubble text="Hello" />
+              !chatId && <Bubble text="This is new chat, Say hi!" type="system" />
             }
           </PageContainer>
         </ImageBackground>
