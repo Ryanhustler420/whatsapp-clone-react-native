@@ -8,6 +8,7 @@ import Colors from '../constants/colors';
 import CommonStyles from "../constants/commonStyles";
 import { searchUsers } from '../utils/actions/userActions';
 import DataItem from '../components/DataItem';
+import { useSelector } from 'react-redux';
 
 const NewChatScreen = props => {
 
@@ -15,6 +16,8 @@ const NewChatScreen = props => {
   const [noResultFound, setNoResultFound] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState();
+
+  const authData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
     props?.navigation?.setOptions({
@@ -40,6 +43,7 @@ const NewChatScreen = props => {
       setIsLoading(true);
 
       const userResult = await searchUsers(searchTerm);
+      delete userResult[authData.userId]
       setUsers(userResult);
 
       if (Object.keys(userResult).length === 0)
@@ -58,6 +62,12 @@ const NewChatScreen = props => {
       clearTimeout(delaySearch);
     }
   }, [searchTerm]);
+
+  const userPressed = userId => {
+    props.navigation.navigate("ChatList", {
+      selectedUserId: userId
+    });
+  }
 
   return (
     <PageContainer>
@@ -89,6 +99,7 @@ const NewChatScreen = props => {
               title={`${userData.firstName} ${userData.lastName}`}
               image={userData.profilePicture}
               subTitle={userData.about}
+              onPress={() => userPressed(userId)}
             />
           }}
         />

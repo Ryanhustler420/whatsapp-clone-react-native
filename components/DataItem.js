@@ -8,7 +8,7 @@ const DataItem = props => {
   const { title, subTitle, profilePicture } = props;
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={props.onPress}>
       <View style={styles.container}>
         <ProfileImage size={40} uri={"https://via.placeholder.com/50x50"} />
         <View style={styles.textContainer}>
