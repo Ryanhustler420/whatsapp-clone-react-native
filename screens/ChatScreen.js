@@ -8,6 +8,7 @@ import Colors from "../constants/colors";
 import backgroundImage from "../assets/images/whatsapp-img.jpg";
 import { useSelector } from 'react-redux';
 import Bubble from '../components/Bubble';
+import { createChat } from '../utils/actions/chatActions';
 
 const ChatScreen = props => {
   const storedUsers = useSelector(state => state.users.storedUsers);
@@ -34,10 +35,19 @@ const ChatScreen = props => {
     setChatUsers(chatData.users);
   }, [chatUsers]);
 
-  const sendMessage = useCallback(() => {
-    console.log("Sending message: ", messageText);
+  const sendMessage = useCallback(async () => {
+    try {
+      let id = chatId;
+      if (!id) {
+        // No Chat Id, Create the chat
+        id = await createChat(authData.userId, props.route?.params?.newChatData);
+        setChatId(id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     setMessageText("");
-  }, [messageText]);
+  }, [messageText, chatId]);
 
   return (
     <SafeAreaView edges={['right', 'left', 'bottom']} style={styles.container}>
