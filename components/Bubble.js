@@ -28,6 +28,10 @@ const Bubble = props => {
       bubbleStyle.backgroundColor = '#e7fed6';
       bubbleStyle.maxWidth = '90%';
       break;
+    case "theirMessage":
+      wrapperStyle.justifyContent = "flex-start";
+      bubbleStyle.maxWidth = '90%';
+      break;
     default:
       break;
   }
