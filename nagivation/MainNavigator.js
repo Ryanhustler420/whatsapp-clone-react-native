@@ -17,7 +17,7 @@ import { ActivityIndicator, View } from 'react-native';
 import Colors from '../constants/colors';
 import CommonStyles from '../constants/commonStyles';
 import { setStoredUsers } from '../store/userSlice';
-import { setChatMessages } from '../store/messagesSlice';
+import { setChatMessages, setStarredMessages } from '../store/messagesSlice';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -160,6 +160,13 @@ const MainNavigator = props => {
           setIsLoading(false);
         }
       }
+    });
+
+    const userStarredMessagesRef = child(dbRef, `userStarredMessages/${authData.userId}`);
+    refs.push(userStarredMessagesRef);
+    onValue(userStarredMessagesRef, querySnapshot => {
+      const starredMessages = querySnapshot.val() ?? {};
+      dispatch(setStarredMessages({ starredMessages }));
     });
 
     refs.push(userChatRef);

@@ -33,4 +33,5 @@ const messagesSlice = createSlice({
 export const setChatMessages = messagesSlice.actions.setChatMessages;
 export const addStarredMessage = messagesSlice.actions.addStarredMessage;
 export const removeStarredMessage = messagesSlice.actions.removeStarredMessage;
+export const setStarredMessages = messagesSlice.actions.setStarredMessages;
 export default messagesSlice.reducer;

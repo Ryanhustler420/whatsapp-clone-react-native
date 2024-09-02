@@ -6,6 +6,7 @@ import Colors from '../constants/colors';
 import uuid from "react-native-uuid";
 import { Ionicons } from '@expo/vector-icons';
 import { starMessage } from '../utils/actions/chatActions';
+import { useSelector } from 'react-redux';
 
 const MenuItem = props => {
   const Icon = props.iconPack ?? Ionicons;
@@ -20,6 +21,7 @@ const MenuItem = props => {
 
 const Bubble = props => {
   const { text, type, messageId, chatId, userId } = props;
+  const starredMessages = useSelector((state) => state.messages.starredMessages[chatId] ?? {});
 
   const wrapperStyle = { ...styles.wrapperStyle };
   const bubbleStyle = { ...styles.textContainer };
