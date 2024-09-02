@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/colors';
+import { Ionicons } from '@expo/vector-icons';
 
 const ReplyTo = props => {
   const { text, user, onCancel } = props;
@@ -10,6 +11,9 @@ const ReplyTo = props => {
       <Text numberOfLines={1} style={styles.name}>{name}</Text>
       <Text numberOfLines={1}>{text}</Text>
     </View>
+    <TouchableOpacity onPress={onCancel}>
+      <Ionicons name="close-circle-outline" size={24} color={Colors.blue} />
+    </TouchableOpacity>
   </View>
 }
 

@@ -110,6 +110,7 @@ const ChatScreen = props => {
             <ReplyTo 
               text={replyingTo.text}
               user={storedUsers[replyingTo.sendBy]}
+              onCancel={() => setReplyingTo(null)}
             />
           }
 
