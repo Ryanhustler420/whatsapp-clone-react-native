@@ -31,3 +31,5 @@ Commands we are using throughout the application
   - npm i react-navigation-header-buttons
 - [React Native Popup Menu](https://www.npmjs.com/package/react-native-popup-menu)
   - npm i react-native-popup-menu
+- [Expo Clipboard](https://docs.expo.dev/versions/latest/sdk/clipboard/#installation)
+  - npx expo install expo-clipboard
