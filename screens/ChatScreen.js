@@ -59,8 +59,9 @@ const ChatScreen = props => {
         id = await createChat(authData.userId, props.route?.params?.newChatData);
         setChatId(id);
       }
-      await sendTextMessage(id, authData.userId, messageText);
+      await sendTextMessage(id, authData.userId, messageText, replyingTo && replyingTo.key);
       setMessageText("");
+      setReplyingTo(null);
     } catch (error) {
       console.log(error);
       setErrorBannerText("Message failed to send");
