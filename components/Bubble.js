@@ -5,6 +5,7 @@ import * as Clipboard from "expo-clipboard";
 import Colors from '../constants/colors';
 import uuid from "react-native-uuid";
 import { Ionicons } from '@expo/vector-icons';
+import { starMessage } from '../utils/actions/chatActions';
 
 const MenuItem = props => {
   const Icon = props.iconPack ?? Ionicons;
@@ -18,7 +19,7 @@ const MenuItem = props => {
 }
 
 const Bubble = props => {
-  const { text, type } = props;
+  const { text, type, messageId, chatId, userId } = props;
 
   const wrapperStyle = { ...styles.wrapperStyle };
   const bubbleStyle = { ...styles.textContainer };
@@ -75,7 +76,7 @@ const Bubble = props => {
             <MenuTrigger />
             <MenuOptions>
               <MenuItem iconPack={Ionicons} iconName={"copy-outline"} text="Copy Text" onSelect={() => copyToClipboard(text)} />
-              <MenuItem iconPack={Ionicons} iconName={"star-outline"} text="Star Message" onSelect={() => copyToClipboard(text)} />
+              <MenuItem iconPack={Ionicons} iconName={"star-outline"} text="Star Message" onSelect={() => starMessage(messageId, chatId, userId)} />
             </MenuOptions>
           </Menu>
         </View>

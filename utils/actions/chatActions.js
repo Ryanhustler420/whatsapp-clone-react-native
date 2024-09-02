@@ -1,5 +1,5 @@
 import { getFirebaseApp } from "../firebaseHelper";
-import { ref, push, child, getDatabase, update } from "firebase/database";
+import { ref, push, child, getDatabase, update, get } from "firebase/database";
 
 export const createChat = async (loggedInUserId, chatData) => {
 
@@ -49,4 +49,25 @@ export const sendTextMessage = async (chatId, senderId, messageText) => {
     latestMessageText: messageText,
     updatedAt: new Date().toISOString(),
   });
+}
+
+export const starMessage = async (messageId, chatId, userId) => {
+  try {
+    const app = getFirebaseApp();
+    const dbRef = ref(getDatabase());
+    const childRef = await child(dbRef, `userStarredMessages/${userId}/${chatId}/${messageId}`);
+
+    const snapshot = await get(childRef);
+    if (snapshot.exists())
+    {
+      // Starred item exists - Unstar
+    }
+    else
+    {
+      // Starred item doent exist - star
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
