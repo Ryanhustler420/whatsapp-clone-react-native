@@ -8,6 +8,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { starMessage } from '../utils/actions/chatActions';
 import { useSelector } from 'react-redux';
 
+// https://stackoverflow.com/a/25275808
+function formatAmPm(dateString) {
+  const date = new Date(dateString);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  // return (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+  return strTime;
+}
+
 const MenuItem = props => {
   const Icon = props.iconPack ?? Ionicons;
 
@@ -20,7 +34,7 @@ const MenuItem = props => {
 }
 
 const Bubble = props => {
-  const { text, type, messageId, chatId, userId } = props;
+  const { text, type, messageId, chatId, userId, date } = props;
   const starredMessages = useSelector((state) => state.messages.starredMessages[chatId] ?? {});
 
   const wrapperStyle = { ...styles.wrapperStyle };
@@ -32,6 +46,7 @@ const Bubble = props => {
 
   let Container = View;
   let isUserMessage = false;
+  const dateString = formatAmPm(date);
 
   switch (type)
   {
@@ -80,8 +95,9 @@ const Bubble = props => {
         <View style={bubbleStyle}>
           <Text style={textStyle}>{text}</Text>
           {
-            <View style={styles.timeContainer}>
-              { isStarred && <Ionicons name="star" size={14} color={Colors.textColor} /> }
+            dateString && <View style={styles.timeContainer}>
+              { isStarred && <Ionicons name="star" size={14} color={Colors.textColor} style={{ marginRight: 5 }} /> }
+              <Text style={styles.time}>{dateString}</Text>
             </View>
           }
           <Menu name={id.current} ref={menuRef}>
@@ -127,6 +143,12 @@ const styles = StyleSheet.create({
   timeContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
+  },
+  time: {
+    fontFamily: 'regular',
+    letterSpacing: .3,
+    color: Colors.grey,
+    fontSize: 12,
   }
 })
 

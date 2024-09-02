@@ -95,6 +95,7 @@ const ChatScreen = props => {
                     messageId={message.key}
                     userId={authData.userId}
                     chatId={chatId}
+                    date={message.sendAt}
                   />
                 }}
               />
