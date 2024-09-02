@@ -9,6 +9,7 @@ import backgroundImage from "../assets/images/whatsapp-img.jpg";
 import { useSelector } from 'react-redux';
 import Bubble from '../components/Bubble';
 import { createChat, sendTextMessage } from '../utils/actions/chatActions';
+import ReplyTo from '../components/ReplyTo';
 
 const ChatScreen = props => {
   const [chatUsers, setChatUsers] = useState([]);
@@ -106,7 +107,10 @@ const ChatScreen = props => {
 
           {
             replyingTo && 
-            <Text>Replying To</Text>
+            <ReplyTo 
+              text={replyingTo.text}
+              user={storedUsers[replyingTo.sendBy]}
+            />
           }
 
         </ImageBackground>
