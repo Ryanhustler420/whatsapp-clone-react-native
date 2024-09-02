@@ -33,3 +33,6 @@ Commands we are using throughout the application
   - npm i react-native-popup-menu
 - [Expo Clipboard](https://docs.expo.dev/versions/latest/sdk/clipboard/#installation)
   - npx expo install expo-clipboard
+- [Expo Notification](https://docs.expo.dev/versions/latest/sdk/notifications/#installation)
+  - npx expo install expo-notifications
+  - npx expo install expo-device

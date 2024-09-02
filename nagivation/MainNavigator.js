@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import React, { useEffect, useRef, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFirebaseApp } from '../utils/firebaseHelper';
 import { child, get, getDatabase, off, onValue, ref } from 'firebase/database';
 import { setChatsData } from "../store/chatSlice";
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Platform, View } from 'react-native';
 import Colors from '../constants/colors';
 import CommonStyles from '../constants/commonStyles';
 import { setStoredUsers } from '../store/userSlice';
@@ -96,6 +98,32 @@ const MainNavigator = props => {
   const [isLoading, setIsLoading] = useState(true);
   const authData = useSelector(state => state.auth.userData);
   const storedUsers = useSelector(state => state.users.storedUsers);
+
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => token && setExpoPushToken(token));
+
+    if (Platform.OS === 'android') {
+      Notifications.getNotificationChannelsAsync().then(value => setChannels(value ?? []));
+    }
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      // Handle received notification
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log("Notification tapped:");
+      console.log(response);
+    });
+
+    return () => {
+      notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
+      responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   useEffect(() => {
     const app = getFirebaseApp();
@@ -191,3 +219,34 @@ const MainNavigator = props => {
 }
 
 export default MainNavigator;
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
+  } else {
+    console.log('Must use physical device for Push Notifications');
+  }
+
+  return token;
+}
