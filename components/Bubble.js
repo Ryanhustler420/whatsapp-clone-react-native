@@ -79,6 +79,11 @@ const Bubble = props => {
       <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
         <View style={bubbleStyle}>
           <Text style={textStyle}>{text}</Text>
+          {
+            <View style={styles.timeContainer}>
+              { isStarred && <Ionicons name="star" size={14} color={Colors.textColor} /> }
+            </View>
+          }
           <Menu name={id.current} ref={menuRef}>
             <MenuTrigger />
             <MenuOptions>
@@ -118,6 +123,10 @@ const styles = StyleSheet.create({
     fontFamily: 'regular',
     letterSpacing: .3,
     fontSize: 16,
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   }
 })
 
