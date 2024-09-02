@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import Colors from '../constants/colors';
+import uuid from "react-native-uuid";
 
 const Bubble = props => {
   const { text, type } = props;
@@ -8,6 +10,9 @@ const Bubble = props => {
   const wrapperStyle = { ...styles.wrapperStyle };
   const bubbleStyle = { ...styles.textContainer };
   const textStyle = { ...styles.text };
+
+  const menuRef = useRef(null);
+  const id = useRef(uuid.v4());
 
   let Container = View;
 
@@ -42,9 +47,17 @@ const Bubble = props => {
 
   return (
     <View style={wrapperStyle}>
-      <Container onLongPress={() => console.log("Long Pressed")} style={{ width: '100%' }}>
+      <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
         <View style={bubbleStyle}>
           <Text style={textStyle}>{text}</Text>
+          <Menu name={id.current} ref={menuRef}>
+            <MenuTrigger />
+            <MenuOptions>
+              <MenuOption text="option 1" />
+              <MenuOption text="option 2" />
+              <MenuOption text="option 3" />
+            </MenuOptions>
+          </Menu>
         </View>
       </Container>
     </View>
