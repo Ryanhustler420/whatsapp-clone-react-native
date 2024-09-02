@@ -34,7 +34,7 @@ const MenuItem = props => {
 }
 
 const Bubble = props => {
-  const { text, type, messageId, chatId, userId, date } = props;
+  const { text, type, messageId, chatId, userId, date, setReply } = props;
   const starredMessages = useSelector((state) => state.messages.starredMessages[chatId] ?? {});
 
   const wrapperStyle = { ...styles.wrapperStyle };
@@ -105,6 +105,7 @@ const Bubble = props => {
             <MenuOptions>
               <MenuItem iconPack={Ionicons} iconName={"copy-outline"} text="Copy Text" onSelect={() => copyToClipboard(text)} />
               <MenuItem iconPack={Ionicons} iconName={`${isStarred ? 'star' : 'star-outline'}`} text={`${isStarred ? 'Unstar' : 'Star'} Message`} onSelect={() => starMessage(messageId, chatId, userId)} />
+              <MenuItem iconPack={Ionicons} iconName={"arrow-undo-outline"} text="Reply" onSelect={setReply} />
             </MenuOptions>
           </Menu>
         </View>

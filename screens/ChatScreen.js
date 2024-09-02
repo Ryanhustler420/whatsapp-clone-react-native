@@ -15,6 +15,7 @@ const ChatScreen = props => {
   const [messageText, setMessageText] = useState("");
   const [errorBannerText, setErrorBannerText] = useState("");
   const [chatId, setChatId] = useState(props.route?.params?.chatId);
+  const [replyingTo, setReplyingTo] = useState();
 
   const storedUsers = useSelector(state => state.users.storedUsers);
   const authData = useSelector(state => state.auth.userData);
@@ -96,11 +97,18 @@ const ChatScreen = props => {
                     userId={authData.userId}
                     chatId={chatId}
                     date={message.sendAt}
+                    setReply={() => setReplyingTo(message)}
                   />
                 }}
               />
             }
           </PageContainer>
+
+          {
+            replyingTo && 
+            <Text>Replying To</Text>
+          }
+
         </ImageBackground>
         <View style={styles.inputContainer}>
           <TouchableOpacity style={styles.mediaButton} onPress={() => console.log("Select Assets")}>
