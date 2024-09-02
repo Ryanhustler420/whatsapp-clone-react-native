@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Colors from '../constants/colors';
 
 const ReplyTo = props => {
   const { text, user, onCancel } = props;
@@ -13,7 +14,23 @@ const ReplyTo = props => {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    backgroundColor: Colors.extraLightGrey,
+    padding: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderLeftColor: Colors.blue,
+    borderLeftWidth: 4,
+  },
+  textContainer: {
+    flex: 1,
+    marginRight: 5,
+  },
+  name: {
+    color: Colors.blue,
+    fontFamily: 'medium',
+    letterSpacing: .3,
+  }
 });
 
 export default ReplyTo;
