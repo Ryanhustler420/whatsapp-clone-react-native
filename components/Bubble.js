@@ -34,8 +34,9 @@ const MenuItem = props => {
 }
 
 const Bubble = props => {
-  const { text, type, messageId, chatId, userId, date, setReply } = props;
+  const { text, type, messageId, chatId, userId, date, setReply, replyingTo } = props;
   const starredMessages = useSelector((state) => state.messages.starredMessages[chatId] ?? {});
+  const storedUsers = useSelector((state) => state.users.storedUsers);
 
   const wrapperStyle = { ...styles.wrapperStyle };
   const bubbleStyle = { ...styles.textContainer };
@@ -88,11 +89,20 @@ const Bubble = props => {
   }
 
   const isStarred = isUserMessage && starredMessages[messageId] !== undefined;
+  const replyingToUser = replyingTo && storedUsers[replyingTo.sendBy];
 
   return (
     <View style={wrapperStyle}>
       <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
         <View style={bubbleStyle}>
+          {
+            replyingToUser && 
+            <Bubble
+              type='reply'
+              text={replyingTo.text}
+              name={`${replyingTo.firstName} ${replyingTo.lastName}`}
+            />
+          }
           <Text style={textStyle}>{text}</Text>
           {
             dateString && <View style={styles.timeContainer}>
