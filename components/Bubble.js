@@ -31,6 +31,7 @@ const Bubble = props => {
   const id = useRef(uuid.v4());
 
   let Container = View;
+  let isUserMessage = false;
 
   switch (type)
   {
@@ -47,12 +48,14 @@ const Bubble = props => {
       bubbleStyle.marginTop = 10;
       break;
     case "myMessage":
+      isUserMessage = true;
       Container = TouchableWithoutFeedback;
       wrapperStyle.justifyContent = "flex-end";
       bubbleStyle.backgroundColor = '#e7fed6';
       bubbleStyle.maxWidth = '90%';
       break;
     case "theirMessage":
+      isUserMessage = true;
       Container = TouchableWithoutFeedback;
       wrapperStyle.justifyContent = "flex-start";
       bubbleStyle.maxWidth = '90%';
@@ -69,6 +72,8 @@ const Bubble = props => {
     }
   }
 
+  const isStarred = isUserMessage && starredMessages[messageId] !== undefined;
+
   return (
     <View style={wrapperStyle}>
       <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
@@ -78,7 +83,7 @@ const Bubble = props => {
             <MenuTrigger />
             <MenuOptions>
               <MenuItem iconPack={Ionicons} iconName={"copy-outline"} text="Copy Text" onSelect={() => copyToClipboard(text)} />
-              <MenuItem iconPack={Ionicons} iconName={"star-outline"} text="Star Message" onSelect={() => starMessage(messageId, chatId, userId)} />
+              <MenuItem iconPack={Ionicons} iconName={`${isStarred ? 'star' : 'star-outline'}`} text={`${isStarred ? 'Unstar' : 'Star'} Message`} onSelect={() => starMessage(messageId, chatId, userId)} />
             </MenuOptions>
           </Menu>
         </View>
