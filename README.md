@@ -36,3 +36,4 @@ Commands we are using throughout the application
 - [Expo Notification](https://docs.expo.dev/versions/latest/sdk/notifications/#installation)
   - npx expo install expo-notifications
   - npx expo install expo-device
+  - [Expo Push Notification Tool](https://expo.dev/notifications)
